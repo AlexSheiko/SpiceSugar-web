@@ -36,7 +36,7 @@
 								var timer = timers[i];
 								var status;
 								var timeLeft;
-								if (timer.get("secondsLeft") != null) {
+								if (timer.get("secondsLeft") != 0) {
 									status = "Running";
 									var date = new Date(null);
 									date.setSeconds(timer.get("secondsLeft"));
