@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "latest"
+  },
+  "applications": {
+    "Sugar \u0026 Spice": {
+      "applicationId": "HCJZabkKVVJfGQ9TX18kUOrvV3S4qyJwocuiKcML",
+      "masterKey": "mUSK7YVCrOnjZKBXjos5DplHKa8W8h4wPljP2duJ"
+    },
+    "_default": {
+      "link": "Sugar \u0026 Spice"
+    }
+  }
+}

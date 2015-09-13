@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Sugar & Spice</title>
+    
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link href="css/jumbotron-narrow.css" rel="stylesheet">
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="//www.parsecdn.com/js/parse-1.6.0.min.js"></script>
+		<script>
+			Parse.initialize("HCJZabkKVVJfGQ9TX18kUOrvV3S4qyJwocuiKcML", "fBOJHd9cUs8L1SZNJZMl9e7xPNeSCuxzJb1qn1IC");
+		
+			function refreshStatuses() {
+				var Timer = Parse.Object.extend("Timer");
+				var query = new Parse.Query(Timer);
+				query.ascending("booth");
+				query.find({
+					success: function(timers) {
+						document.getElementById('tablePrint').innerHTML = ""; // clear previous values in table
+					
+						var myTable="<table class=\'table table-hover\'>" + 
+										"<thead>" + 
+											"<tr>" + 
+												"<th>   #</th>" +
+												"<th>Status</th>" +
+												"<th>Time left</th>" +
+											"</tr>" +
+										"</thead>" + 
+										
+										"<tbody>";
+					
+						if (timers.length > 0) {
+							for (var i = 0; i < timers.length; i++) {
+								var timer = timers[i];
+								var status;
+								var timeLeft;
+								if (timer.get("secondsLeft") != null) {
+									status = "Running";
+									var date = new Date(null);
+									date.setSeconds(timer.get("secondsLeft"));
+									timeLeft = date.toISOString().substring(14, 19);
+								} else {
+									status = "Stopped";
+									timeLeft = "—";
+								}
+								myTable+= 	"<tr>" +
+												"<td>" + timer.get("booth") + "</td>" +
+												"<td>" + status + "</td>" +
+												"<td>" + timeLeft + "</td>" + 
+											"</tr>";
+							}
+						} else {
+							myTable+= "<td><p style='font-size: 24px; color: #929292; margin-left: -3px'>No timers configured</p></td>";
+						}
+					
+						myTable += "</tbody></table>";
+						document.getElementById('tablePrint').innerHTML = myTable;
+					},
+					error: function(error) {
+					}
+				});
+			}
+			
+			setInterval ( refreshStatuses, 1000 );
+		</script>
+	</head>
+  
+	
+	<body>
+		<div class="container">
+			<div class="jumbotron">
+		  
+				<img src="img/logo.png"/>
+		  
+				<div class="table-responsive" id="tablePrint">
+				</div>
+		
+			</div>
+		</div>
+	</body>
+
+</html>
+
+		
